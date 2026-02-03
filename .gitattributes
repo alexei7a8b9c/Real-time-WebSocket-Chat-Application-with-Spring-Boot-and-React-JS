@@ -1,0 +1,37 @@
+# Normalize line endings for all text files
+* text=auto
+
+# Treat specific files as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.jar binary
+*.class binary
+
+# Ensure .sh files are executable and have LF line endings
+*.sh text eol=lf
+
+# Java source files
+*.java text
+*.js text
+*.jsx text
+*.css text
+*.html text
+*.json text
+*.xml text
+*.properties text
+
+# Git configuration files
+.gitattributes text
+.gitignore text
+
+# Documentation files
+*.md text
+*.txt text
+LICENSE text
+README* text
+CHANGELOG* text

@@ -1,0 +1,202 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Vuepress build output
+.vuepress/dist
+
+# Serverless directories
+.serverless/
+
+# FuseBox cache
+.fusebox/
+
+# DynamoDB Local files
+.dynamodb/
+
+# TernJS port file
+.tern-port
+
+# Stores VSCode versions used for testing VSCode extensions
+.vscode-test
+
+# Vite cache
+.vite
+.vite-ssg-temp
+
+# Temporary folders
+tmp/
+temp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Java
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# Maven
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+!spring-boot-app/
+spring-boot-app/logs/
+spring-boot-app/temp/
+
+# Frontend build
+frontend/dist/
+frontend/.env.local
+frontend/.env.*.local
+
+# Package manager specific
+package-lock.json
+yarn.lock
+
+# Compiled sources
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Database
+*.db
+*.sqlite
+
+# API keys
+*.pem
+*.key
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IntelliJ IDEA
+.idea/*
+!.idea/codeStyles/
+!.idea/codeStyles/codeStyleConfig.xml
+!.idea/inspectionProfiles/
+!.idea/inspectionProfiles/Project_Default.xml
+
+# Project specific
+frontend/.env
+frontend/.env.production
+
+# Spring Boot specific
+HELP.md
+.mvn/
+mvnw
+mvnw.cmd
+!frontend/mvnw
+!frontend/mvnw.cmd
+
+# Spring Boot logs
+logs/
+
+# React build
+build/
+frontend/build/
+
+# Vite
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/.vite/
+frontend/.vitepress/cache
+
+# Testing
+frontend/coverage/
+frontend/.nyc_output
+
+# Debug log
+debug.log
