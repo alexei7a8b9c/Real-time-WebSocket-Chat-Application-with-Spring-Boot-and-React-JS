@@ -1,4 +1,3 @@
-import SockJS from 'sockjs-client'
 import { Client } from '@stomp/stompjs'
 
 class WebSocketService {
@@ -7,10 +6,11 @@ class WebSocketService {
         this.connected = false
         this.subscriptions = []
     }
+
     connect(onConnectCallback, onErrorCallback) {
-        const socket = new SockJS('/ws')
+        // Используем нативный WebSocket вместо SockJS
         this.client = new Client({
-            webSocketFactory: () => socket,
+            brokerURL: 'ws://localhost:8080/ws/websocket',
             reconnectDelay: 5000,
             heartbeatIncoming: 4000,
             heartbeatOutgoing: 4000,
@@ -34,8 +34,10 @@ class WebSocketService {
                 if (onErrorCallback) onErrorCallback(event)
             }
         })
+
         this.client.activate()
     }
+
     disconnect() {
         if (this.client) {
             this.subscriptions.forEach(sub => sub.unsubscribe())
@@ -44,6 +46,7 @@ class WebSocketService {
             this.connected = false
         }
     }
+
     subscribe(destination, callback) {
         if (this.client && this.connected) {
             const subscription = this.client.subscribe(destination, (message) => {
@@ -59,6 +62,7 @@ class WebSocketService {
             return subscription
         }
     }
+
     send(destination, body) {
         if (this.client && this.connected) {
             this.client.publish({
@@ -70,6 +74,7 @@ class WebSocketService {
         console.error('Cannot send - not connected')
         return false
     }
+
     isConnected() {
         return this.connected
     }

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import ChatHeader from './components/ChatHeader'
-import ChatMessages from './components/ChatMessages'
-import ChatInput from './components/ChatInput'
-import UserList from './components/UserList'
+import ChatHeader from './components/ChatHeader.jsx'
+import ChatMessages from './components/ChatMessages.jsx'
+import ChatInput from './components/ChatInput.jsx'
+import UserList from './components/UserList.jsx'
 import websocketService from './services/websocket'
+import './styles/App.css'
 
 function App() {
     const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -24,7 +25,7 @@ function App() {
         const newUsername = usernameInput.trim()
         setUsername(newUsername)
         setIsLoggedIn(true)
-        connectWebSocket(newUsername)
+        connectWebSocket()
     }
 
     const logout = () => {
@@ -37,34 +38,39 @@ function App() {
         setOnlineUsers([])
     }
 
-    const connectWebSocket = (user) => {
-        websocketService.connect(() => {
-            setConnected(true)
-            showNotification('Connected to chat!', 'success')
-            websocketService.subscribe('/topic/public', (message) => {
-                setMessages(prev => [...prev, message])
-            })
-            websocketService.subscribe('/topic/users', (update) => {
-                if (update.username && !onlineUsers.find(u => u.username === update.username)) {
-                    setOnlineUsers(prev => [...prev, update])
-                }
-            })
-            sendJoinMessage(user)
-        }, (error) => {
-            console.error('Connection error:', error)
-            showNotification('Connection failed', 'error')
-        })
-    }
+    const connectWebSocket = () => {
+        websocketService.connect(
+            () => {
+                setConnected(true)
+                showNotification('Connected to chat!', 'success')
 
-    const sendJoinMessage = (user) => {
-        const joinMessage = {
-            from: user,
-            text: `${user} joined the chat!`,
-            type: 'JOIN',
-            timestamp: new Date().toISOString()
-        }
-        websocketService.send('/app/chat.sendMessage', joinMessage)
-        setOnlineUsers(prev => [...prev, { username: user }])
+                websocketService.subscribe('/topic/public', (message) => {
+                    setMessages(prev => [...prev, message])
+                })
+
+                websocketService.subscribe('/topic/users', (update) => {
+                    if (update.username && !onlineUsers.find(u => u.username === update.username)) {
+                        setOnlineUsers(prev => [...prev, update])
+                    }
+                })
+
+                const joinMessage = {
+                    from: username,
+                    text: `${username} joined the chat!`,
+                    type: 'JOIN',
+                    timestamp: new Date().toISOString()
+                }
+
+                websocketService.send('/app/chat.sendMessage', joinMessage)
+
+                setOnlineUsers(prev => [...prev, { username }])
+            },
+            (error) => {
+                console.error('Connection error:', error)
+                showNotification('Connection failed', 'error')
+                setConnected(false)
+            }
+        )
     }
 
     const sendMessage = (messageData) => {
@@ -72,17 +78,26 @@ function App() {
             showNotification('Not connected to server', 'error')
             return
         }
+
         const message = {
             from: username,
             text: messageData.text,
             type: 'CHAT',
             timestamp: new Date().toISOString()
         }
+
         const sent = websocketService.send('/app/chat.sendMessage', message)
+
         if (!sent) {
             showNotification('Failed to send message', 'error')
         }
     }
+
+    useEffect(() => {
+        return () => {
+            websocketService.disconnect()
+        }
+    }, [])
 
     return (
         <div className="app">
